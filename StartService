@@ -1,4 +1,4 @@
-$Username = 'Domain'+'admin';
+$Username = 'domain or workgroup'+'admin';
 $Password = 'pass' | ConvertTo-SecureString -asPlainText -Force;
 $credential = New-Object System.Management.Automation.PScredential($username,$password);
 
