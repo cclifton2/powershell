@@ -1,0 +1,15 @@
+$Username = 'Domain'+'admin';
+$Password = 'pass' | ConvertTo-SecureString -asPlainText -Force;
+$credential = New-Object System.Management.Automation.PScredential($username,$password);
+
+$RSession = New-PSSession -ComputerName "0.0.0.0" -Credential $Credential
+
+$result = Invoke-Command -Session $RSession -ScriptBlock {
+
+Set-ItemProperty -Path "Registry::HKLM\System\CurrentControlSet\Services\service" -Name "DelayedAutostart" -Value 1 -Type DWORD
+Set-ItemProperty -Path "Registry::HKLM\System\CurrentControlSet\Services\service" -Name "Start" -Value 2 -Type DWORD
+Get-Service -DisplayName "service" | Start-Service
+
+return $result
+}
+Remove-PSSession $RSession
